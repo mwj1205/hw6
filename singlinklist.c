@@ -177,11 +177,11 @@ int insertNode(headNode* h, int key) {
 			h->first = node;       // head 변경
 		}
 		else {
-			while (curr != NULL && curr->key < node->key) { // 입력받은 key가 더 크면 다음 노드로 이동
+			while (curr != NULL && curr->key < node->key) { // 입력받은 key보다 큰 값 탐색
 				prev = curr;
 				curr = curr->link;
 			}
-			if (curr != NULL) { // 입력받은 key보다 더 큰 값 찾으면
+			if (curr != NULL) { // 입력받은 key보다 더 큰 값 찾으면 그 노드 앞에 삽입
 				node->link = curr;
 				prev->link = node;
 			}
@@ -240,23 +240,24 @@ int deleteNode(headNode* h, int key) {
 		printf("Linked List is empty!\n");
 		return 0;
 	}
-	listNode* curr, * prev;
-	curr = h->first;
-	prev = NULL;
 	if (h->first->key == key) { // 삭제 대상인 node가 맨 앞에 있으면 deleteFirst호출해서 삭제
 		deleteFirst(h);
 	}
 	else {
+		listNode* curr, * prev;
+		curr = h->first;
+		prev = NULL;
 		while (curr != NULL && curr->key != key) { // 입력받은 key 탐색
 			prev = curr;
 			curr = curr->link;
 		}
-		if (curr == NULL) { // ket를 찾지 못하면 오류
+		if (curr == NULL) { // key를 찾지 못하면 오류
 			printf("Fail to find the key\n");
-			return 0;
 		}
-		prev->link = curr->link; // 노드 삭제
-		free(curr);
+		else {
+			prev->link = curr->link; // 노드 삭제
+			free(curr);
+		}
 	}
 	return 0;
 
@@ -294,7 +295,7 @@ int deleteLast(headNode* h) {
  */
 int invertList(headNode* h) {
 	if (h->first == NULL) { // 리스트가 공백상태면 오류
-		printf("Linked List is empty!");
+		printf("Linked List is empty!\n");
 		return 0;
 	}
 	listNode* prev, * curr, * head;
