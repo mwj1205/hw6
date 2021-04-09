@@ -270,21 +270,18 @@ int deleteLast(headNode* h) {
 		printf("Linked List is empty!\n");
 		return 0;
 	}
-	if (h->first->link == NULL) {
-		deleteFirst(h);
+	if (h->first->link == NULL) { // 리스트에 node가 하나만 존재하면
+		deleteFirst(h);           // 맨 앞에 있는 node == 맨 뒤에 있는 노드이므로 deleteFirst로 삭제
 	}
 	else {
 		listNode* curr, * prev;
 		curr = h->first;
 		prev = NULL;
-		printf("==확인 while문 앞 ==\n");
 		while (curr->link != NULL) { // 리스트 맨 끝까지 이동
 			prev = curr;
 			curr = curr->link;
-			printf("==확인 while문 안 ==\n");
 		}
 		prev->link = NULL; // 맨 마지막 노드와 link 해제
-		printf("==확인 while문 앞 ==\n");
 		free(curr);
 	}
 
