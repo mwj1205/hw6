@@ -240,24 +240,23 @@ int deleteNode(headNode* h, int key) {
 		printf("Linked List is empty!\n");
 		return 0;
 	}
+	listNode* curr, * prev;
+	curr = h->first;
+	prev = NULL;
 	if (h->first->key == key) { // 삭제 대상인 node가 맨 앞에 있으면 deleteFirst호출해서 삭제
 		deleteFirst(h);
 	}
 	else {
-		listNode* curr, * prev;
-		curr = h->first;
-		prev = NULL;
 		while (curr != NULL && curr->key != key) { // 입력받은 key 탐색
 			prev = curr;
 			curr = curr->link;
 		}
 		if (curr == NULL) { // ket를 찾지 못하면 오류
 			printf("Fail to find the key\n");
+			return 0;
 		}
-		else {
-			prev->link = curr->link; // 노드 삭제
-			free(curr);
-		}
+		prev->link = curr->link; // 노드 삭제
+		free(curr);
 	}
 	return 0;
 
