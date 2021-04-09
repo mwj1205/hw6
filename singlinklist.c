@@ -295,7 +295,7 @@ int deleteLast(headNode* h) {
  */
 int invertList(headNode* h) {
 	if (h->first == NULL) { // 리스트가 공백상태면 오류
-		printf("Linked List is empty!\n");
+		printf("Linked List is empty!");
 		return 0;
 	}
 	listNode* prev, * curr, * head;
