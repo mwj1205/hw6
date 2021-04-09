@@ -2,15 +2,13 @@
  * singly linked list
  *
  *  Data Structures
- *  Department of Computer Science 
+ *  Department of Computer Science
  *  at Chungbuk National University
  */
-
-
 #include<stdio.h>
 #include<stdlib.h>
 
-/* 필요한 헤더파일 추가 */
+ /* 필요한 헤더파일 추가 */
 
 typedef struct Node {
 	int key;
@@ -41,10 +39,10 @@ int main()
 {
 	char command;
 	int key;
-	headNode* headnode=NULL;
+	headNode* headnode = NULL;
 	headnode = initialize(headnode);;
 	printf("[----- [한민우] [2018038047] -----]\n");
-	do{
+	do {
 		printf("----------------------------------------------------------------\n");
 		printf("                     Singly Linked List                         \n");
 		printf("----------------------------------------------------------------\n");
@@ -58,7 +56,7 @@ int main()
 		printf("Command = ");
 		scanf(" %c", &command);
 
-		switch(command) {
+		switch (command) {
 			/* 리스트 초기화 */
 		case 'z': case 'Z':
 			headnode = initialize(headnode);
@@ -112,7 +110,7 @@ int main()
 			break;
 		}
 
-	}while(command != 'q' && command != 'Q');
+	} while (command != 'q' && command != 'Q');
 
 	return 1;
 }
@@ -120,7 +118,7 @@ int main()
 headNode* initialize(headNode* h) {
 
 	/* headNode가 NULL이 아니면, freeNode를 호출하여 할당된 메모리 모두 해제 */
-	if(h != NULL)
+	if (h != NULL)
 		freeList(h);
 
 	/* headNode에 대한 메모리를 할당하여 리턴 */
@@ -129,14 +127,14 @@ headNode* initialize(headNode* h) {
 	return temp;
 }
 
-int freeList(headNode* h){
+int freeList(headNode* h) {
 	/* h와 연결된 listNode 메모리 해제
 	 * headNode도 해제되어야 함.
 	 */
 	listNode* p = h->first;
 
 	listNode* prev = NULL;
-	while(p != NULL) {
+	while (p != NULL) {
 		prev = p;
 		p = p->link;
 		free(prev);
@@ -170,24 +168,24 @@ int insertNode(headNode* h, int key) {
 	node->link = NULL;
 	curr = h->first;
 	prev = NULL;
-	if(h->first == NULL){ // 리스트가 공백상태면 맨 앞에 node 삽입
+	if (h->first == NULL) { // 리스트가 공백상태면 맨 앞에 node 삽입
 		h->first = node;
 	}
-	else{ 
-		if(curr->key > node->key){ // 첫 노드의 key가 입력받은 key보다 크면
+	else {
+		if (curr->key >= node->key) { // 첫 노드의 key가 입력받은 key보다 크거나 같으면
 			node->link = curr;     // 삽입
 			h->first = node;       // head 변경
 		}
-		else{
-			while(curr != NULL && curr->key < node->key){ // 입력받은 key가 더 크면 다음 노드로 이동
+		else {
+			while (curr != NULL && curr->key < node->key) { // 입력받은 key가 더 크면 다음 노드로 이동
 				prev = curr;
 				curr = curr->link;
 			}
-			if(curr != NULL){ // 입력받은 key보다 더 큰 값 찾으면
+			if (curr != NULL) { // 입력받은 key보다 더 큰 값 찾으면
 				node->link = curr;
 				prev->link = node;
 			}
-			else{ // 입력받은 key보다 큰 값이 없을 때 맨 뒤에 삽입
+			else { // 입력받은 key보다 큰 값이 없을 때 맨 뒤에 삽입
 				prev->link = node;
 			}
 		}
@@ -205,11 +203,11 @@ int insertLast(headNode* h, int key) {
 	node->link = NULL;
 	Toend = h->first;
 
-	if(h->first == NULL){ // 리스트가 공백상태면 맨 앞에 node 삽입
+	if (h->first == NULL) { // 리스트가 공백상태면 맨 앞에 node 삽입
 		h->first = node;
 	}
-	else{
-		while(Toend->link != NULL){ // 리스트 맨 끝가지 이동
+	else {
+		while (Toend->link != NULL) { // 리스트 맨 끝가지 이동
 			Toend = Toend->link;
 		}
 		Toend->link = node; // 맨 끝에 삽입
@@ -222,7 +220,7 @@ int insertLast(headNode* h, int key) {
  * list의 첫번째 노드 삭제
  */
 int deleteFirst(headNode* h) {
-	if(h->first == NULL){ // 리스트가 공백상태면 오류
+	if (h->first == NULL) { // 리스트가 공백상태면 오류
 		printf("Linked List is empty!\n");
 		return 0;
 	}
@@ -238,22 +236,22 @@ int deleteFirst(headNode* h) {
  * list에서 key에 대한 노드 삭제
  */
 int deleteNode(headNode* h, int key) {
-	if(h->first == NULL){ // 리스트가 공백상태면 오류
+	if (h->first == NULL) { // 리스트가 공백상태면 오류
 		printf("Linked List is empty!\n");
 		return 0;
 	}
 	listNode* curr, * prev;
 	curr = h->first;
 	prev = NULL;
-	if(h->first->key == key) { // 삭제 대상인 node가 맨 앞에 있으면 deleteFirst호출해서 삭제
+	if (h->first->key == key) { // 삭제 대상인 node가 맨 앞에 있으면 deleteFirst호출해서 삭제
 		deleteFirst(h);
-		}
-	else{
-		while(curr != NULL && curr->key != key){ // 입력받은 key 탐색
+	}
+	else {
+		while (curr != NULL && curr->key != key) { // 입력받은 key 탐색
 			prev = curr;
 			curr = curr->link;
 		}
-		if(curr == NULL){ // ket를 찾지 못하면 오류
+		if (curr == NULL) { // ket를 찾지 못하면 오류
 			printf("Fail to find the key\n");
 			return 0;
 		}
@@ -268,20 +266,27 @@ int deleteNode(headNode* h, int key) {
  * list의 마지막 노드 삭제
  */
 int deleteLast(headNode* h) {
-	if(h->first == NULL){ // 리스트가 공백상태면 오류
+	if (h->first == NULL) { // 리스트가 공백상태면 오류
 		printf("Linked List is empty!\n");
 		return 0;
 	}
-	listNode* curr, * prev;
-	curr = h->first;
-	prev = NULL;
-
-	while(curr->link != NULL){ // 리스트 맨 끝까지 이동
-		prev = curr;
-		curr = curr->link;
+	if (h->first->link == NULL) {
+		deleteFirst(h);
 	}
-	prev->link = NULL; // 맨 마지막 노드와 link 해제
-	free(curr); 
+	else {
+		listNode* curr, * prev;
+		curr = h->first;
+		prev = NULL;
+		printf("==확인 while문 앞 ==\n");
+		while (curr->link != NULL) { // 리스트 맨 끝까지 이동
+			prev = curr;
+			curr = curr->link;
+			printf("==확인 while문 안 ==\n");
+		}
+		prev->link = NULL; // 맨 마지막 노드와 link 해제
+		printf("==확인 while문 앞 ==\n");
+		free(curr);
+	}
 
 	return 0;
 }
@@ -291,7 +296,7 @@ int deleteLast(headNode* h) {
  * 리스트의 링크를 역순으로 재 배치
  */
 int invertList(headNode* h) {
-	if(h->first == NULL){ // 리스트가 공백상태면 오류
+	if (h->first == NULL) { // 리스트가 공백상태면 오류
 		printf("Linked List is empty!");
 		return 0;
 	}
@@ -299,7 +304,7 @@ int invertList(headNode* h) {
 	head = h->first;
 	prev = NULL;
 	curr = NULL;
-	while(head){ // 리스트 끝까지
+	while (head) { // 리스트 끝까지
 		prev = curr;
 		curr = head;
 		head = head->link;
@@ -316,14 +321,14 @@ void printList(headNode* h) {
 
 	printf("\n---PRINT\n");
 
-	if(h == NULL) {
+	if (h == NULL) {
 		printf("Nothing to print....\n");
 		return;
 	}
 
 	p = h->first;
 
-	while(p != NULL) {
+	while (p != NULL) {
 		printf("[ [%d]=%d ] ", i, p->key);
 		p = p->link;
 		i++;
